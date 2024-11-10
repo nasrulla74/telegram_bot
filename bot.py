@@ -1,29 +1,32 @@
-# bot.py
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
-# Define a command handler
-def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text('Hello! I am your bot.')
+# Your bot's token from BotFather
+TOKEN = "7760359550:AAGIDakI__sCuxgON4LgHG1tThzvvyvhLmg"
 
-# Define a message handler
-def echo(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text(update.message.text)
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("Hello! I am your bot. How can I assist you today?")
 
-def main() -> None:
-    # Replace 'YOUR_TOKEN' with your bot's token
-    updater = Updater("YOUR_TOKEN")
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("You can interact with me by sending any message.")
 
-    # Get the dispatcher to register handlers
-    dispatcher = updater.dispatcher
+async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # This function will echo back any text message sent by the user.
+    await update.message.reply_text(update.message.text)
 
-    # Register handlers
-    dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+def main():
+    # Set up the bot
+    app = Application.builder().token(TOKEN).build()
 
-    # Start the Bot
-    updater.start_polling()
-    updater.idle()
+    # Add command handlers
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("help", help_command))
 
-if __name__ == '__main__':
+    # Add a message handler for all text messages
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
+
+    # Run the bot until the user interrupts it
+    app.run_polling()
+
+if __name__ == "__main__":
     main()
