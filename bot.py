@@ -6,8 +6,8 @@ import os
 load_dotenv()
 
 # Your bot's token from BotFather
-# TOKEN = "7760359550:AAGIDakI__sCuxgON4LgHG1tThzvvyvhLmg"
-TOKEN = os.getenv("TOKEN")
+TOKEN = "7760359550:AAGIDakI__sCuxgON4LgHG1tThzvvyvhLmg"
+# TOKEN = os.getenv("TOKEN")
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
