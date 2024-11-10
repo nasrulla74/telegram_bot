@@ -1,8 +1,14 @@
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Your bot's token from BotFather
-TOKEN = "7760359550:AAGIDakI__sCuxgON4LgHG1tThzvvyvhLmg"
+# TOKEN = "7760359550:AAGIDakI__sCuxgON4LgHG1tThzvvyvhLmg"
+TOKEN = os.getenv("TOKEN")
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Hello! I am your bot. How can I assist you today?")
